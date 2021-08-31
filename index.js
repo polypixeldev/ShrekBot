@@ -20,6 +20,7 @@ client.on('ready', () => {
 
 // when the bot receives a message
 // need async message because we are making HTTP requests
+let loading = false;
 client.on('message', async message => {
     // ignore messages from the bot itself
     if (message.author.bot || message.author.system || message.cleanContent === '') {
@@ -52,12 +53,20 @@ client.on('message', async message => {
         console.log(data)
         let embed;
         if(data.error === `Model Poly-Pixel/${MODEL} is currently loading`){
-          embed = new Discord.MessageEmbed()
-          .setColor(0x000000)
-          .setDescription(`Loading Virtual Shrek... \n \n Est. Time left: \`${data.estimated_time}\``)
+          if(loading === false){
+            embed = new Discord.MessageEmbed()
+            .setColor(0x00FF00)
+            .setDescription(`Shrek will be at the swamp soon... \n \n Est. Time left: \`${data.estimated_time}\``) 
+            
+            message.react('⏲')
+            loading = true;
+          } else {
+            message.react('⏲')
+            return;
+          }
         } else {
           embed = new Discord.MessageEmbed()
-          .setColor(0x00FF00)
+          .setColor(0xFF0000)
           .setDescription(data.error)
         }
         botResponse = embed;
