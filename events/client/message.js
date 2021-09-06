@@ -89,7 +89,7 @@ module.exports = async (Discord, client, message) => {
         if (loading === false) {
           embed = new Discord.MessageEmbed()
             .setColor(0x00FF00)
-            .setDescription(`Shrek will be at the swamp soon... \n \n Est. Time left: \`${data.estimated_time}\``)
+            .setDescription(`Shrek will be at the swamp soon... \n \n Est. Time left: \`${data.estimated_time}\` seconds`)
 
           let time = Math.ceil(data.estimated_time) * 1000
           console.log(time)
@@ -112,6 +112,7 @@ module.exports = async (Discord, client, message) => {
 
               setTimeout(waitAndRetry, 10000)
             } else {
+              loading = false
               for(let payload of pendingInputs){
                 console.log(payload)
                 let pendRes = fetch(API_URL, {
