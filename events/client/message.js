@@ -129,6 +129,10 @@ module.exports = async (Discord, client, message) => {
           }
           setTimeout(waitAndRetry, time)
           message.react('⏰')
+          pendingInputs.push({
+            payload: payload,
+            message: message
+          })
           loading = true;
         } else {
           message.react('⏰')
